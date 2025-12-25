@@ -241,12 +241,17 @@ export default function Catalogue() {
                 type="error"
                 showIcon
                 style={{ marginBottom: 24 }}
+                closable
               />
             )}
 
             {loading ? (
               <Row gutter={[16, 16]}>
-                <SkeletonLoader count={6} />
+                {Array.from({ length: 8 }).map((_, index) => (
+                  <Col xs={24} sm={12} md={8} xl={6} key={index}>
+                    <SkeletonLoader count={1} />
+                  </Col>
+                ))}
               </Row>
             ) : paginatedProducts.length > 0 ? (
               <>

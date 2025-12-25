@@ -6,8 +6,9 @@ A production-ready jewellery catalogue website built with React, Ant Design, and
 
 - **Product Catalogue**: Browse jewellery products with filtering and search
 - **Google Sheets Integration**: Manage products via Google Sheets (no backend required)
-- **Google Drive Images**: Automatic conversion of Drive links to optimized image URLs
-- **Performance Optimized**: Lazy loading, memoization, and caching for fast loading
+- **Google Drive Images**: Direct image URLs using `uc?export=view` (no CORS or CSP issues!)
+- **Skeleton Loading**: Smooth loading experience with Ant Design skeletons
+- **Performance Optimized**: Memoization and caching for fast loading
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
 - **Static Pages**: About, Contact, Privacy Policy, Terms & Conditions, Shipping & Returns
 
@@ -116,13 +117,25 @@ Copy the `SHEET_ID` part and add it to your `.env` file.
 
 ## 🖼 Google Drive Image Setup
 
-1. Upload your product images to Google Drive
-2. Right-click on an image > **Get link**
-3. Set permission to **Anyone with the link** > **Viewer**
-4. Copy the share link
-5. Paste it in the `image_url` column of your Google Sheet
+### ⚠️ CRITICAL: Each Image Must Be Shared Individually!
 
-The app automatically converts Google Drive share links to direct image URLs for optimal loading.
+**This is the #1 reason images don't show up on the website.**
+
+1. **Upload images to Google Drive**
+2. **For EACH image file** (not the folder, each file!):
+   - Right-click on the image file
+   - Click **"Share"** or **"Get link"**
+   - Change to **"Anyone with the link"**
+   - Set permission to **"Viewer"**
+   - Click **"Copy link"**
+   - Click **"Done"**
+3. **Paste the share link** in the `image_url` column of your Google Sheet
+   - OR extract the file ID and put it in the `image_id` column (cleaner)
+4. **Verify it works** by testing in an incognito browser window
+
+The app automatically converts Google Drive share links to direct image URLs using `uc?export=view` endpoint. No CORS or CSP issues!
+
+**📖 For detailed instructions and troubleshooting, see:** [GOOGLE-DRIVE-IMAGES-SETUP.md](./GOOGLE-DRIVE-IMAGES-SETUP.md)
 
 ## 📁 Project Structure
 
@@ -133,8 +146,8 @@ src/
 │   ├── Footer/         # Site footer
 │   ├── ProductCard/    # Product display card
 │   ├── ProductModal/   # Product detail modal
-│   ├── ImageLoader/    # Optimized image loader
-│   └── SkeletonLoader/ # Loading skeletons
+│   ├── ImageLoader/    # Image loader with skeleton
+│   └── SkeletonLoader/ # Grid loading skeletons
 ├── pages/              # Page components
 │   ├── Home/          # Homepage
 │   ├── Catalogue/     # Product catalogue
@@ -145,7 +158,7 @@ src/
 ├── hooks/             # Custom React hooks
 │   └── useProducts.js # Products data hook
 ├── utils/             # Utility functions
-│   ├── imageUtils.js  # Image URL conversion
+│   ├── imageUtils.js  # Google Drive URL converter
 │   └── constants.js   # App constants
 ├── styles/            # Global styles
 │   └── global.css     # CSS reset and variables

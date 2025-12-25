@@ -1,24 +1,25 @@
-.imageContainer {
+.container {
   position: relative;
   width: 100%;
+  height: 100%;
   overflow: hidden;
   background-color: #f5f5f5;
 }
 
-.image {
+.iframe {
   width: 100%;
-  height: auto;
-  object-fit: cover;
-  transition: opacity 0.3s ease;
+  height: 100%;
+  border: none;
+  pointer-events: none; /* Prevent interaction with iframe */
 }
 
-.errorPlaceholder {
+.placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f5f5f5;
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0;
   color: #999;
   font-size: 14px;
-  min-height: 200px;
 }
-

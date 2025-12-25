@@ -1,4 +1,4 @@
-import { convertDriveToImageUrl } from '../utils/imageUtils';
+import { getPreviewUrl } from '../utils/imageUtils';
 
 /**
  * Product Service
@@ -16,11 +16,11 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
  */
 export function normalizeProducts(rawProducts) {
   return rawProducts.map(product => {
-    // Convert image URL if it's a Google Drive link
-    let imageUrl = product.image_url || product.imageurl || '';
-    if (imageUrl && imageUrl.includes('drive.google.com')) {
-      imageUrl = convertDriveToImageUrl(imageUrl);
-    }
+    // Get image source - prefer image_id, fallback to image_url
+    const imageSource = product.image_id || product.image_url || product.imageurl || '';
+    
+    // Convert to preview URL for iframe
+    const imageUrl = getPreviewUrl(imageSource);
 
     // Calculate discount if not provided
     let discountPercent = product.discount_percent || product.discountpercent || 0;

@@ -1,34 +1,32 @@
 /**
- * Converts Google Drive share links to direct image URLs
- * Supports multiple Google Drive link formats
+ * Converts Google Drive share links to iframe preview URLs
+ * Simple and reliable - uses /preview endpoint
  */
 
 /**
  * Extract file ID from various Google Drive link formats
- * @param {string} url - Google Drive share link
+ * @param {string} url - Google Drive share link or file ID
  * @returns {string|null} - File ID or null if not found
  */
 export function extractDriveFileId(url) {
-  if (!url) return null;
+  if (!url || url.trim() === '') return null;
 
-  // Handle direct file ID
-  if (!url.includes('http')) {
-    return url;
+  const trimmedUrl = url.trim();
+
+  // If it's already just a file ID (no URL), return it
+  if (!trimmedUrl.includes('/') && !trimmedUrl.includes('?')) {
+    return trimmedUrl;
   }
 
-  // Format 1: https://drive.google.com/file/d/FILE_ID/view
-  // Format 2: https://drive.google.com/open?id=FILE_ID
-  // Format 3: https://drive.google.com/uc?id=FILE_ID
-  // Format 4: https://docs.google.com/document/d/FILE_ID/edit
-
+  // Match patterns for Google Drive URLs
   const patterns = [
-    /\/file\/d\/([a-zA-Z0-9_-]+)/,
-    /[?&]id=([a-zA-Z0-9_-]+)/,
-    /\/d\/([a-zA-Z0-9_-]+)/,
+    /\/file\/d\/([a-zA-Z0-9_-]+)/,  // /file/d/FILE_ID/...
+    /[?&]id=([a-zA-Z0-9_-]+)/,       // ?id=FILE_ID or &id=FILE_ID
+    /\/d\/([a-zA-Z0-9_-]+)/,         // /d/FILE_ID/...
   ];
 
   for (const pattern of patterns) {
-    const match = url.match(pattern);
+    const match = trimmedUrl.match(pattern);
     if (match && match[1]) {
       return match[1];
     }
@@ -38,57 +36,16 @@ export function extractDriveFileId(url) {
 }
 
 /**
- * Convert Google Drive share link to direct image URL
- * @param {string} shareLink - Google Drive share link
- * @param {object} options - Options for image URL
- * @param {number} options.width - Optional width parameter
- * @param {number} options.height - Optional height parameter
- * @returns {string} - Direct image URL
+ * Convert to iframe preview URL
+ * @param {string} input - Google Drive share link or file ID
+ * @returns {string} - Preview URL for iframe
  */
-export function convertDriveToImageUrl(shareLink, options = {}) {
-  const fileId = extractDriveFileId(shareLink);
+export function getPreviewUrl(input) {
+  const fileId = extractDriveFileId(input);
   
   if (!fileId) {
-    console.warn('Could not extract file ID from URL:', shareLink);
-    return shareLink; // Return original if conversion fails
+    return '';
   }
 
-  // Base URL for direct image access
-  let imageUrl = `https://drive.google.com/uc?export=view&id=${fileId}`;
-
-  // Add size parameters if provided
-  if (options.width) {
-    imageUrl += `&w=${options.width}`;
-  }
-  if (options.height) {
-    imageUrl += `&h=${options.height}`;
-  }
-
-  return imageUrl;
+  return `https://drive.google.com/file/d/${fileId}/preview`;
 }
-
-/**
- * Generate optimized image URLs for different screen sizes
- * @param {string} shareLink - Google Drive share link
- * @returns {object} - Object with different size URLs
- */
-export function getOptimizedImageUrls(shareLink) {
-  const fileId = extractDriveFileId(shareLink);
-  
-  if (!fileId) {
-    return {
-      thumbnail: shareLink,
-      small: shareLink,
-      medium: shareLink,
-      large: shareLink,
-    };
-  }
-
-  return {
-    thumbnail: `https://drive.google.com/uc?export=view&id=${fileId}&w=200`,
-    small: `https://drive.google.com/uc?export=view&id=${fileId}&w=400`,
-    medium: `https://drive.google.com/uc?export=view&id=${fileId}&w=800`,
-    large: `https://drive.google.com/uc?export=view&id=${fileId}&w=1200`,
-  };
-}
-
