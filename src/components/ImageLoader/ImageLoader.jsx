@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import styles from './ImageLoader.module.css';
 
 /**
- * Simple Image Loader using Google Drive iframe
- * Uses /preview endpoint - most reliable method
+ * Image Loader Component
+ * Uses direct img tags for fast, lightweight loading
+ * No iframes - better performance and no CSP issues
  */
 export default function ImageLoader({ 
   src, 
@@ -11,6 +13,9 @@ export default function ImageLoader({
   placeholder,
   ...props 
 }) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+
   if (!src || src.trim() === '') {
     return (
       <div className={`${styles.placeholder} ${className}`}>
@@ -19,15 +24,38 @@ export default function ImageLoader({
     );
   }
 
+  const handleLoad = () => {
+    setIsLoading(false);
+  };
+
+  const handleError = () => {
+    setIsLoading(false);
+    setHasError(true);
+  };
+
+  if (hasError) {
+    return (
+      <div className={`${styles.placeholder} ${className}`}>
+        <span>Image unavailable</span>
+      </div>
+    );
+  }
+
   return (
     <div className={`${styles.container} ${className}`}>
-      <iframe
+      {isLoading && (
+        <div className={styles.loadingOverlay}>
+          <div className={styles.spinner}></div>
+        </div>
+      )}
+      <img
         src={src}
-        title={alt || 'Product image'}
-        className={styles.iframe}
-        frameBorder="0"
-        scrolling="no"
-        allowFullScreen
+        alt={alt || 'Product image'}
+        className={`${styles.image} ${isLoading ? styles.hidden : ''}`}
+        onLoad={handleLoad}
+        onError={handleError}
+        loading="lazy"
+        {...props}
       />
     </div>
   );

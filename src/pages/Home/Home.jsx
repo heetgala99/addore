@@ -1,5 +1,7 @@
-import { useState } from 'react';
-import { Row, Col, Typography, Button, Spin, Alert } from 'antd';
+import { useState, useEffect, useCallback } from 'react';
+import _ from 'lodash';
+import { Row, Col, Typography, Button, Alert } from 'antd';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useProducts } from '../../hooks/useProducts';
 import ProductCard from '../../components/ProductCard/ProductCard';
@@ -12,13 +14,46 @@ const { Title, Paragraph } = Typography;
 
 /**
  * Home Page
- * Features hero section, featured products, and category highlights
+ * Features hero section with image carousel, featured products, and category highlights
  */
 export default function Home() {
   const navigate = useNavigate();
-  const { featuredProducts, loading, error } = useProducts();
+  const { products, featuredProducts, loading, error } = useProducts();
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Get unique images from products for the carousel
+  const carouselImages = _.uniqBy(
+    _.map(
+      _.filter(products, p => p.imageUrl && p.imageUrl.trim() !== ''), p => ({
+        url: p.imageUrl,
+        name: p.name,
+        id: p.id
+      })
+    ),'url'
+  );
+
+  // Auto-advance carousel
+  useEffect(() => {
+    if (carouselImages.length === 0) return;
+    
+    const timer = setInterval(() => {
+      setCurrentSlide(prev => (prev + 1) % carouselImages.length);
+    }, 4000);
+
+    return () => clearInterval(timer);
+  }, [carouselImages.length]);
+
+  const handlePrevSlide = useCallback(() => {
+    setCurrentSlide(prev => 
+      prev === 0 ? carouselImages.length - 1 : prev - 1
+    );
+  }, [carouselImages.length]);
+
+  const handleNextSlide = useCallback(() => {
+    setCurrentSlide(prev => (prev + 1) % carouselImages.length);
+  }, [carouselImages.length]);
 
   const handleProductClick = (product) => {
     setSelectedProduct(product);
@@ -34,24 +69,77 @@ export default function Home() {
 
   return (
     <div className={styles.home}>
-      {/* Hero Section */}
+      {/* Hero Section with Carousel */}
       <section className={styles.heroSection}>
-        <div className={styles.heroContent}>
-          <Title level={1} className={styles.heroTitle}>
-            Discover Exquisite Jewellery
-          </Title>
-          <Paragraph className={styles.heroSubtitle}>
-            Timeless elegance meets modern design. Explore our curated collection 
-            of handcrafted jewellery pieces.
-          </Paragraph>
-          <Button 
-            type="primary" 
-            size="large"
-            onClick={() => navigate(ROUTES.CATALOGUE)}
-            className={styles.heroButton}
-          >
-            Shop Now
-          </Button>
+        {/* Background Carousel */}
+        <div className={styles.carouselContainer}>
+          {carouselImages.length > 0 ? (
+            <>
+              {carouselImages.map((image, index) => (
+                <div
+                  key={image.id}
+                  className={`${styles.carouselSlide} ${index === currentSlide ? styles.active : ''}`}
+                >
+                  <img 
+                    src={image.url} 
+                    alt={image.name}
+                    className={styles.carouselImage}
+                  />
+                </div>
+              ))}
+              
+              {/* Carousel Controls */}
+              <button 
+                className={`${styles.carouselButton} ${styles.prevButton}`}
+                onClick={handlePrevSlide}
+                aria-label="Previous slide"
+              >
+                <LeftOutlined />
+              </button>
+              <button 
+                className={`${styles.carouselButton} ${styles.nextButton}`}
+                onClick={handleNextSlide}
+                aria-label="Next slide"
+              >
+                <RightOutlined />
+              </button>
+
+              {/* Carousel Indicators */}
+              <div className={styles.carouselIndicators}>
+                {carouselImages.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`${styles.indicator} ${index === currentSlide ? styles.activeIndicator : ''}`}
+                    onClick={() => setCurrentSlide(index)}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className={styles.carouselPlaceholder} />
+          )}
+        </div>
+
+        {/* Hero Content Overlay */}
+        <div className={styles.heroOverlay}>
+          <div className={styles.heroContent}>
+            <Title level={1} className={styles.heroTitle}>
+              Discover Exquisite Jewellery
+            </Title>
+            <Paragraph className={styles.heroSubtitle}>
+              Timeless elegance meets modern design. Explore our curated collection 
+              of handcrafted jewellery pieces.
+            </Paragraph>
+            <Button 
+              type="primary" 
+              size="large"
+              onClick={() => navigate(ROUTES.CATALOGUE)}
+              className={styles.heroButton}
+            >
+              Shop Now
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -148,4 +236,3 @@ export default function Home() {
     </div>
   );
 }
-

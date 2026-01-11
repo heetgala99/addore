@@ -55,15 +55,15 @@ export default function ProductModal({ product, open, onClose }) {
             <div className={styles.priceSection}>
               <div className={styles.priceContainer}>
                 <Text strong className={styles.currentPrice}>
-                  ${product.price.toFixed(2)}
+                  ₹{product.price.toLocaleString('en-IN')}
                 </Text>
                 {hasDiscount && originalPrice > product.price && (
                   <>
                     <Text delete className={styles.originalPrice}>
-                      ${originalPrice.toFixed(2)}
+                      ₹{originalPrice.toLocaleString('en-IN')}
                     </Text>
                     <Text className={styles.savings}>
-                      Save ${(originalPrice - product.price).toFixed(2)}
+                      Save ₹{(originalPrice - product.price).toLocaleString('en-IN')}
                     </Text>
                   </>
                 )}

@@ -1,6 +1,6 @@
 /**
- * Converts Google Drive share links to iframe preview URLs
- * Simple and reliable - uses /preview endpoint
+ * Converts Google Drive share links to direct image URLs
+ * Uses thumbnail endpoint for fast, lightweight loading
  */
 
 /**
@@ -36,16 +36,29 @@ export function extractDriveFileId(url) {
 }
 
 /**
- * Convert to iframe preview URL
+ * Convert to direct image URL using Google Drive thumbnail endpoint
+ * This is lightweight and fast - no iframes needed
  * @param {string} input - Google Drive share link or file ID
- * @returns {string} - Preview URL for iframe
+ * @param {number} size - Size of the image (default 800 for good quality)
+ * @returns {string} - Direct image URL
  */
-export function getPreviewUrl(input) {
+export function getDirectImageUrl(input, size = 800) {
   const fileId = extractDriveFileId(input);
   
   if (!fileId) {
     return '';
   }
 
-  return `https://drive.google.com/file/d/${fileId}/preview`;
+  // Use the thumbnail endpoint with a large size for good quality
+  // This loads much faster than iframe and works without CSP issues
+  return `https://drive.google.com/thumbnail?id=${fileId}&sz=w${size}`;
+}
+
+/**
+ * Get preview URL (legacy - for backward compatibility)
+ * @param {string} input - Google Drive share link or file ID
+ * @returns {string} - Direct image URL
+ */
+export function getPreviewUrl(input) {
+  return getDirectImageUrl(input);
 }

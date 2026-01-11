@@ -1,4 +1,4 @@
-import { getPreviewUrl } from '../utils/imageUtils';
+import { getDirectImageUrl } from '../utils/imageUtils';
 
 /**
  * Product Service
@@ -19,8 +19,8 @@ export function normalizeProducts(rawProducts) {
     // Get image source - prefer image_id, fallback to image_url
     const imageSource = product.image_id || product.image_url || product.imageurl || '';
     
-    // Convert to preview URL for iframe
-    const imageUrl = getPreviewUrl(imageSource);
+    // Convert to direct image URL (fast, lightweight, no iframe needed)
+    const imageUrl = getDirectImageUrl(imageSource);
 
     // Calculate discount if not provided
     let discountPercent = product.discount_percent || product.discountpercent || 0;
