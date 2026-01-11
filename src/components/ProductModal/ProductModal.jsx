@@ -1,4 +1,5 @@
-import { Modal, Typography, Tag, Row, Col } from 'antd';
+import { Modal, Typography, Tag, Row, Col, Button } from 'antd';
+import { CloseOutlined } from '@ant-design/icons';
 import ImageLoader from '../ImageLoader/ImageLoader';
 import styles from './ProductModal.module.css';
 
@@ -22,7 +23,18 @@ export default function ProductModal({ product, open, onClose }) {
       width={900}
       className={styles.productModal}
       centered
+      closeIcon={null}
     >
+      {/* Custom Close Button */}
+      <Button
+        type="primary"
+        danger
+        icon={<CloseOutlined />}
+        onClick={onClose}
+        className={styles.closeButton}
+        aria-label="Close modal"
+      />
+
       <Row gutter={[24, 24]}>
         <Col xs={24} md={12}>
           <div className={styles.imageContainer}>
@@ -88,4 +100,3 @@ export default function ProductModal({ product, open, onClose }) {
     </Modal>
   );
 }
-

@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Layout, Menu, Button } from 'antd';
-import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
-import { Link, useLocation } from 'react-router-dom';
+import { Layout, Menu, Button, Collapse } from 'antd';
+import { MenuOutlined, CloseOutlined, DownOutlined, RightOutlined } from '@ant-design/icons';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../utils/constants';
 import styles from './Header.module.css';
 
@@ -9,13 +9,15 @@ const { Header: AntHeader } = Layout;
 
 /**
  * Header Component
- * Navigation menu with mobile responsiveness
+ * Navigation menu with mobile responsiveness and working submenus
  */
 export default function Header() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const menuItems = [
+  // Desktop menu items for Ant Design Menu
+  const desktopMenuItems = [
     {
       key: ROUTES.HOME,
       label: <Link to={ROUTES.HOME}>Home</Link>,
@@ -58,6 +60,66 @@ export default function Header() {
     },
   ];
 
+  // Mobile menu items using Collapse for submenus
+  const mobileCollapseItems = [
+    {
+      key: 'about',
+      label: 'About',
+      children: (
+        <div className={styles.mobileSubmenu}>
+          <Link 
+            to={ROUTES.ABOUT} 
+            className={styles.mobileSubmenuLink}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            About Us
+          </Link>
+          <Link 
+            to={ROUTES.CONTACT} 
+            className={styles.mobileSubmenuLink}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Contact
+          </Link>
+        </div>
+      ),
+    },
+    {
+      key: 'policies',
+      label: 'Policies',
+      children: (
+        <div className={styles.mobileSubmenu}>
+          <Link 
+            to={ROUTES.PRIVACY} 
+            className={styles.mobileSubmenuLink}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Privacy Policy
+          </Link>
+          <Link 
+            to={ROUTES.TERMS} 
+            className={styles.mobileSubmenuLink}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Terms & Conditions
+          </Link>
+          <Link 
+            to={ROUTES.SHIPPING} 
+            className={styles.mobileSubmenuLink}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Shipping & Returns
+          </Link>
+        </div>
+      ),
+    },
+  ];
+
+  const handleMobileNavClick = (path) => {
+    navigate(path);
+    setMobileMenuOpen(false);
+  };
+
   const selectedKeys = [location.pathname];
 
   return (
@@ -70,7 +132,7 @@ export default function Header() {
         <div className={styles.desktopMenu}>
           <Menu
             mode="horizontal"
-            items={menuItems}
+            items={desktopMenuItems}
             selectedKeys={selectedKeys}
             className={styles.menu}
           />
@@ -85,17 +147,35 @@ export default function Header() {
 
         {mobileMenuOpen && (
           <div className={styles.mobileMenu}>
-            <Menu
-              mode="vertical"
-              items={menuItems}
-              selectedKeys={selectedKeys}
-              className={styles.mobileMenuContent}
-              onClick={() => setMobileMenuOpen(false)}
-            />
+            <div className={styles.mobileMenuContent}>
+              {/* Simple Links */}
+              <button 
+                className={`${styles.mobileNavLink} ${location.pathname === ROUTES.HOME ? styles.active : ''}`}
+                onClick={() => handleMobileNavClick(ROUTES.HOME)}
+              >
+                Home
+              </button>
+              <button 
+                className={`${styles.mobileNavLink} ${location.pathname === ROUTES.CATALOGUE ? styles.active : ''}`}
+                onClick={() => handleMobileNavClick(ROUTES.CATALOGUE)}
+              >
+                Catalogue
+              </button>
+              
+              {/* Collapsible Sections */}
+              <Collapse
+                items={mobileCollapseItems}
+                className={styles.mobileCollapse}
+                expandIconPosition="end"
+                bordered={false}
+                expandIcon={({ isActive }) => 
+                  isActive ? <DownOutlined /> : <RightOutlined />
+                }
+              />
+            </div>
           </div>
         )}
       </div>
     </AntHeader>
   );
 }
-

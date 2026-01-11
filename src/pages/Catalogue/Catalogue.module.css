@@ -6,43 +6,81 @@
 .container {
   max-width: 1500px;
   margin: 0 auto;
-  padding: 0 10px;
+  padding: 0 16px;
 }
 
 .pageTitle {
-  margin-bottom: 32px !important;
+  margin-bottom: 24px !important;
   font-size: 36px;
 }
 
-.filtersPanel {
-  background: #f5f5f5;
-  padding: 24px;
-  border-radius: 8px;
-  position: sticky;
-  top: 80px;
-}
-
-.filtersPanel h4 {
-  margin-bottom: 24px !important;
-}
-
-.filterSection {
+/* Filters Collapse */
+.filtersCollapse {
   margin-bottom: 24px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  border: 1px solid #e8e8e8;
 }
 
-.filterSection h5 {
-  margin-bottom: 12px !important;
+.filtersCollapse :global(.ant-collapse-item) {
+  border: none !important;
+}
+
+.filtersCollapse :global(.ant-collapse-header) {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 16px 20px !important;
+  align-items: center !important;
+  background-color: #ededed;;
+}
+
+.filtersCollapse :global(.ant-collapse-content) {
+  border-top: 1px solid #e8e8e8;
+}
+
+.filtersCollapse :global(.ant-collapse-content-box) {
+  padding: 20px !important;
+}
+
+.filterHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Filters Content */
+.filtersContent {
+  background: transparent;
+}
+
+.filterItem h5 {
+  margin-bottom: 10px !important;
   font-size: 14px;
   font-weight: 600;
+  color: #333;
 }
 
 .priceDisplay {
   text-align: center;
   margin-top: 8px;
-  color: #666;
+  padding: 6px 10px;
+  background: #fff;
+  border-radius: 6px;
+  color: #333;
   font-weight: 600;
+  font-size: 13px;
+  border: 1px solid #e8e8e8;
 }
 
+/* Reset Button Container */
+.resetButtonContainer {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+  text-align: center;
+}
+
+/* Toolbar */
 .toolbar {
   display: flex;
   justify-content: space-between;
@@ -57,18 +95,13 @@
   font-size: 14px;
 }
 
+/* Pagination */
 .pagination {
   margin-top: 32px;
   text-align: center;
 }
 
-@media (max-width: 992px) {
-  .filtersPanel {
-    position: static;
-    margin-bottom: 24px;
-  }
-}
-
+/* Mobile Styles */
 @media (max-width: 768px) {
   .catalogue {
     padding: 16px 0;
@@ -78,10 +111,17 @@
     font-size: 28px;
   }
 
+  .filtersCollapse :global(.ant-collapse-header) {
+    padding: 14px 16px !important;
+  }
+
+  .filtersCollapse :global(.ant-collapse-content-box) {
+    padding: 16px !important;
+  }
+
   .toolbar {
     flex-direction: column;
     gap: 16px;
     align-items: stretch;
   }
 }
-
