@@ -1,6 +1,6 @@
 /**
  * Converts Google Drive share links to direct image URLs
- * Uses thumbnail endpoint for fast, lightweight loading
+ * Uses lh3.googleusercontent.com endpoint for publicly shared files
  */
 
 /**
@@ -37,9 +37,8 @@ export function extractDriveFileId(url) {
 
 /**
  * Convert to direct image URL using Google Drive thumbnail endpoint
- * This is lightweight and fast - no iframes needed
  * @param {string} input - Google Drive share link or file ID
- * @param {number} size - Size of the image (default 800 for good quality)
+ * @param {number} size - Size parameter (not used, kept for compatibility)
  * @returns {string} - Direct image URL
  */
 export function getDirectImageUrl(input, size = 800) {
@@ -49,9 +48,8 @@ export function getDirectImageUrl(input, size = 800) {
     return '';
   }
 
-  // Use the thumbnail endpoint with a large size for good quality
-  // This loads much faster than iframe and works without CSP issues
-  return `https://drive.google.com/thumbnail?id=${fileId}&sz=w${size}`;
+  // Use lh3.googleusercontent.com endpoint for publicly shared files
+  return `https://lh3.googleusercontent.com/d/${fileId}`;
 }
 
 /**
