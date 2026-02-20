@@ -20,6 +20,13 @@ function ProductCard({ product, onClick }) {
     }
   };
 
+  const rawStockPending = product.stockPending ?? 0;
+  const parsedStockPending = parseInt(rawStockPending, 10);
+  const stockPending = Number.isFinite(parsedStockPending) ? parsedStockPending : 0;
+  const hasStock = stockPending > 0;
+  const stockLabel = hasStock ? `Only ${stockPending} left` : 'Out of stock';
+  const stockColor = hasStock ? 'green' : 'blue';
+
   return (
     <Card
       hoverable
@@ -46,11 +53,16 @@ function ProductCard({ product, onClick }) {
           {product.name}
         </Title>
         
-        {product.category && (
-          <Tag color="gold" className={styles.categoryTag}>
-            {product.category}
+        <div className={styles.metaRow}>
+          {product.category && (
+            <Tag color="gold" className={styles.categoryTag}>
+              {product.category}
+            </Tag>
+          )}
+          <Tag color={stockColor} className={styles.stockTag}>
+            {stockLabel}
           </Tag>
-        )}
+        </div>
 
         <div className={styles.priceSection}>
           <div className={styles.priceContainer}>

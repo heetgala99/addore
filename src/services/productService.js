@@ -32,6 +32,9 @@ export function normalizeProducts(rawProducts) {
       }
     }
 
+    const rawStockPending = product.stock_pending || 0;
+    const stockPending = parseInt(rawStockPending, 10)
+
     return {
       id: product.id || product.ID || '',
       name: product.name || product.Name || '',
@@ -42,6 +45,7 @@ export function normalizeProducts(rawProducts) {
       imageUrl: imageUrl,
       description: product.description || product.Description || '',
       featured: product.featured === true || product.featured === 'TRUE' || product.featured === 'true' || product.featured === 1,
+      stockPending,
     };
   });
 }

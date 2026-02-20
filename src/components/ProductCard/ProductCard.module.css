@@ -46,8 +46,21 @@
   font-weight: 600;
 }
 
-.categoryTag {
+.metaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   margin-bottom: 5px;
+}
+
+.categoryTag {
+  margin-bottom: 0;
+}
+
+.stockTag {
+  margin-bottom: 0;
+  font-weight: 600;
 }
 
 .priceSection {

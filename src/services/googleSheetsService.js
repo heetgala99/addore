@@ -61,7 +61,8 @@ function parseCSV(csvText) {
   const headers = parseCSVLine(lines[0]);
   const headerMap = {};
   headers.forEach((header, index) => {
-    headerMap[header.trim().toLowerCase()] = index;
+    const normalizedHeader = header.trim().toLowerCase().replace(/\s+/g, '_');
+    headerMap[normalizedHeader] = index;
   });
 
   // Parse data rows
@@ -79,7 +80,7 @@ function parseCSV(csvText) {
       value = value.replace(/^"|"$/g, '');
       
       // Convert to appropriate type
-      if (key === 'id' || key === 'price' || key === 'original_price' || key === 'discount_percent') {
+      if (key === 'id' || key === 'price' || key === 'original_price' || key === 'discount_percent' || key === 'stock_pending') {
         value = value ? parseFloat(value) : 0;
       } else if (key === 'featured') {
         value = value.toLowerCase() === 'true' || value === '1';
@@ -133,7 +134,7 @@ function parseAPIResponse(data) {
     return [];
   }
 
-  const headers = data.values[0].map(h => h.trim().toLowerCase());
+  const headers = data.values[0].map(h => h.trim().toLowerCase().replace(/\s+/g, '_'));
   const products = [];
 
   for (let i = 1; i < data.values.length; i++) {
@@ -145,7 +146,7 @@ function parseAPIResponse(data) {
       let value = row[index] || '';
       
       // Convert to appropriate type
-      if (header === 'id' || header === 'price' || header === 'original_price' || header === 'discount_percent') {
+      if (header === 'id' || header === 'price' || header === 'original_price' || header === 'discount_percent' || header === 'stock_pending') {
         value = value ? parseFloat(value) : 0;
       } else if (header === 'featured') {
         value = value.toString().toLowerCase() === 'true' || value === '1' || value === 1;
