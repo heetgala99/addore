@@ -1,5 +1,6 @@
 import { Typography } from 'antd';
 import styles from './StaticPages.module.css';
+import logo from '../../assets/logo.jpeg';
 
 const { Title, Paragraph } = Typography;
 
@@ -12,7 +13,7 @@ export default function About() {
       <div className={styles.container}>
         <div className={styles.aboutUsLogoContainer}>
           <img 
-            src="/src/assets/logo.jpeg" 
+            src={logo} 
             alt="AYA - Accessories You Addore"
             className={styles.aboutUsLogo}
           />
