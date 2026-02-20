@@ -21,16 +21,27 @@
 
 .logo {
   text-decoration: none;
-  color: #1890ff;
+  color: var(--primary-color);
   font-size: 24px;
   font-weight: bold;
   margin-right: 48px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.logo h1 {
-  margin: 0;
+.logoImage {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.logoText {
   font-size: 28px;
   font-weight: 700;
+  line-height: 1;
 }
 
 .desktopMenu {
@@ -96,7 +107,7 @@
   }
 
   .mobileNavLink.active {
-    color: #1890ff;
+    color: var(--primary-color);
     font-weight: 600;
   }
 
@@ -146,15 +157,15 @@
 
   .mobileSubmenuLink:hover {
     background-color: #f0f0f0;
-    color: #1890ff;
-    border-left-color: #1890ff;
+    color: var(--primary-color);
+    border-left-color: var(--primary-color);
   }
 
   .logo {
     margin-right: 0;
   }
 
-  .logo h1 {
+  .logoText {
     font-size: 22px;
   }
 }

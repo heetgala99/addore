@@ -54,7 +54,7 @@ function NotFound() {
       </p>
       <a href={ROUTES.HOME} style={{ 
         padding: '12px 24px', 
-        background: '#1890ff', 
+        background: 'var(--primary-color)', 
         color: '#fff', 
         borderRadius: '4px',
         textDecoration: 'none'

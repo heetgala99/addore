@@ -62,7 +62,7 @@
 
 .currentPrice {
   font-size: 20px;
-  color: #1890ff;
+  color: var(--primary-color);
   font-weight: 700;
 }
 

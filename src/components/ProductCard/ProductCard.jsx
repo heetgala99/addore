@@ -47,7 +47,7 @@ function ProductCard({ product, onClick }) {
         </Title>
         
         {product.category && (
-          <Tag color="blue" className={styles.categoryTag}>
+          <Tag color="gold" className={styles.categoryTag}>
             {product.category}
           </Tag>
         )}

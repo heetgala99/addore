@@ -3,6 +3,7 @@ import { Layout, Menu, Button, Collapse } from 'antd';
 import { MenuOutlined, CloseOutlined, DownOutlined, RightOutlined } from '@ant-design/icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../utils/constants';
+import logo from '../../assets/logo.jpeg';
 import styles from './Header.module.css';
 
 const { Header: AntHeader } = Layout;
@@ -126,7 +127,8 @@ export default function Header() {
     <AntHeader className={styles.header}>
       <div className={styles.headerContent}>
         <Link to={ROUTES.HOME} className={styles.logo}>
-          <h1>Addore</h1>
+          <img src={logo} alt="Accessories You Addore logo" className={styles.logoImage} />
+          <span className={styles.logoText}>Addore</span>
         </Link>
 
         <div className={styles.desktopMenu}>

@@ -22,7 +22,8 @@ body {
 
 /* CSS Variables */
 :root {
-  --primary-color: #1890ff;
+  --primary-color: #d4af37;
+  --primary-hover-color: #b88a1e;
   --secondary-color: #52c41a;
   --error-color: #ff4d4f;
   --warning-color: #faad14;
@@ -70,7 +71,7 @@ a {
 }
 
 a:hover {
-  color: #40a9ff;
+  color: var(--primary-hover-color);
 }
 
 /* Lists */

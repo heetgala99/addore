@@ -20,32 +20,27 @@ export default function Contact() {
         <Row gutter={[24, 24]}>
           <Col xs={24} sm={12} md={8}>
             <Card className={styles.contactCard}>
-              <MailOutlined style={{ fontSize: 32, color: '#1890ff', marginBottom: 16 }} />
+              <MailOutlined style={{ fontSize: 32, color: 'var(--primary-color)', marginBottom: 16 }} />
               <Title level={4}>Email</Title>
-              <Text>info@addore.com</Text>
-              <br />
-              <Text>support@addore.com</Text>
+              <Text>nisha310jain@gmail.com</Text>
             </Card>
           </Col>
 
           <Col xs={24} sm={12} md={8}>
             <Card className={styles.contactCard}>
-              <PhoneOutlined style={{ fontSize: 32, color: '#1890ff', marginBottom: 16 }} />
+              <PhoneOutlined style={{ fontSize: 32, color: 'var(--primary-color)', marginBottom: 16 }} />
               <Title level={4}>Phone</Title>
-              <Text>+1 (555) 123-4567</Text>
-              <br />
-              <Text type="secondary">Mon-Fri: 9AM - 6PM EST</Text>
+              <Text>+91 77180 62292</Text>
             </Card>
           </Col>
 
           <Col xs={24} sm={12} md={8}>
             <Card className={styles.contactCard}>
-              <EnvironmentOutlined style={{ fontSize: 32, color: '#1890ff', marginBottom: 16 }} />
+              <EnvironmentOutlined style={{ fontSize: 32, color: 'var(--primary-color)', marginBottom: 16 }} />
               <Title level={4}>Address</Title>
               <Text>
-                123 Jewellery Street<br />
-                New York, NY 10001<br />
-                United States
+                Surat, Gujarat<br />
+                India
               </Text>
             </Card>
           </Col>
@@ -55,7 +50,7 @@ export default function Contact() {
           <Title level={2}>Send Us a Message</Title>
           <Paragraph>
             For inquiries about our products, custom orders, or any other questions, 
-            please email us at <Text strong>info@addore.com</Text>. We typically 
+            please email us at <Text strong>nisha310jain@gmail.com</Text>. We typically 
             respond within 24-48 hours.
           </Paragraph>
         </div>

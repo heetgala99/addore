@@ -1,70 +1,48 @@
-import { Typography, Row, Col } from 'antd';
+import { Typography } from 'antd';
 import styles from './StaticPages.module.css';
 
 const { Title, Paragraph } = Typography;
 
-/**
+/** 
  * About Us Page
  */
 export default function About() {
   return (
     <div className={styles.staticPage}>
       <div className={styles.container}>
-        <Title level={1}>About Us</Title>
-        
-        <Row gutter={[32, 32]}>
-          <Col xs={24} md={12}>
-            <Title level={2}>Our Story</Title>
-            <Paragraph>
-              Welcome to Addore, where timeless elegance meets modern design. 
-              We are passionate about creating exquisite jewellery pieces that 
-              reflect your unique style and personality.
-            </Paragraph>
-            <Paragraph>
-              Founded with a vision to make luxury jewellery accessible to everyone, 
-              we carefully curate our collection to ensure each piece meets our 
-              high standards of quality and craftsmanship.
-            </Paragraph>
-          </Col>
-          
-          <Col xs={24} md={12}>
-            <Title level={2}>Our Mission</Title>
-            <Paragraph>
-              Our mission is to provide you with beautiful, high-quality jewellery 
-              that you can cherish for a lifetime. We believe that every piece 
-              should tell a story and hold special meaning.
-            </Paragraph>
-            <Paragraph>
-              We work with skilled artisans and use only the finest materials to 
-              create jewellery that stands the test of time.
-            </Paragraph>
-          </Col>
-        </Row>
+        <div className={styles.aboutUsLogoContainer}>
+          <img 
+            src="/src/assets/logo.jpeg" 
+            alt="AYA - Accessories You Addore"
+            className={styles.aboutUsLogo}
+          />
+        </div>
 
-        <Title level={2} style={{ marginTop: 48 }}>Why Choose Us</Title>
-        <Row gutter={[24, 24]}>
-          <Col xs={24} sm={12} md={8}>
-            <Title level={4}>Quality Craftsmanship</Title>
-            <Paragraph>
-              Every piece is carefully crafted with attention to detail and 
-              commitment to excellence.
-            </Paragraph>
-          </Col>
-          <Col xs={24} sm={12} md={8}>
-            <Title level={4}>Wide Selection</Title>
-            <Paragraph>
-              Browse through our extensive collection of rings, necklaces, 
-              earrings, and more.
-            </Paragraph>
-          </Col>
-          <Col xs={24} sm={12} md={8}>
-            <Title level={4}>Customer Satisfaction</Title>
-            <Paragraph>
-              Your satisfaction is our priority. We're here to help you find 
-              the perfect piece.
-            </Paragraph>
-          </Col>
-        </Row>
+        <Title level={1}>About Us</Title>
+        <Paragraph>
+          Welcome to a world where every piece tells a story. Accessories You Addore 
+          was born out of a simple passion: the belief that luxury should be accessible, 
+          and every woman deserves to feel like royalty every single day.
+        </Paragraph>
+        <Paragraph>
+          We don't just sell jewelry; we curate confidence. From our signature gold-plated 
+          Kadas to our delicate everyday earrings, every item in our collection is 
+          hand-picked for its craftsmanship and 'wow' factor. Whether you are gifting a 
+          loved one or—like many of our favorite customers—giving yourself the 'birthday 
+          treat' you truly deserve, we are here to make that moment shine.
+        </Paragraph>
+        <Paragraph>
+          Thank you for letting us be a small part of your big moments.
+        </Paragraph>
+
+        <Title level={2} style={{ marginTop: 48 }}>Maintenance</Title>
+        <Title level={3}>Your Care Guide</Title>
+        <ul>
+          <li><strong>Water Friendly:</strong> Our pieces are crafted to be Anti-Tarnish and Water-Resistant, so you don't have to worry about the occasional splash.</li>
+          <li><strong>Maintain the Glow:</strong> While the metal won't tarnish, we recommend wiping your jewelry with a soft cloth after wearing it to remove dust and skin oils.</li>
+          <li><strong>Storage:</strong> To prevent surface scratches, store your kadas and earrings in your Accessories You Addore box when you aren't wearing them.</li>
+          <li><strong>Best Practice:</strong> To keep the gold "mirror-bright," avoid direct contact with strong chemicals like bleach or heavy perfumes.</li>
+        </ul>
       </div>
     </div>
   );

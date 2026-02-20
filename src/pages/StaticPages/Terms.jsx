@@ -36,11 +36,35 @@ export default function Terms() {
           site is accurate, complete, reliable, current, or error-free.
         </Paragraph>
 
-        <Title level={2}>Pricing</Title>
+        <Title level={2}>Product Representation</Title>
         <Paragraph>
-          All prices are subject to change without notice. We reserve the right 
-          to modify prices at any time. Prices displayed are in the currency 
-          specified and may not include applicable taxes or shipping fees.
+          We strive to show the true color and texture of our jewelry; however, 
+          slight variations may occur due to your device's screen settings.
+        </Paragraph>
+
+        <Title level={2}>Pricing & Payments</Title>
+        <Paragraph>
+          All prices are final. Orders will only be processed once the full 
+          payment is received. We reserve the right to modify prices at any time.
+        </Paragraph>
+
+        <Title level={2}>Order Cancellation</Title>
+        <Paragraph>
+          Accessories You Addore reserves the right to cancel an order in case 
+          of stock unavailability, with a full refund to the customer.
+        </Paragraph>
+
+        <Title level={2}>The Unboxing Policy</Title>
+        <Paragraph>
+          By purchasing, the customer agrees to provide an uncut, unedited 
+          unboxing video starting from the sealed package for any exchange 
+          requests regarding damages.
+        </Paragraph>
+
+        <Title level={2}>No Partial Payments</Title>
+        <Paragraph>
+          We do not accept partial deposits or provide Cash on Delivery (COD) 
+          services at this time.
         </Paragraph>
 
         <Title level={2}>Intellectual Property</Title>
@@ -67,7 +91,7 @@ export default function Terms() {
         <Title level={2}>Contact Information</Title>
         <Paragraph>
           For questions about these Terms & Conditions, please contact us at 
-          legal@addore.com.
+          nisha310jain@gmail.com.
         </Paragraph>
       </div>
     </div>
