@@ -2,12 +2,6 @@
  * Application constants
  */
 
-export const CATEGORIES = {
-  RING: 'Ring',
-  NECKLACE: 'Necklace',
-  EARRINGS: 'Earrings',
-};
-
 export const SORT_OPTIONS = {
   PRICE_LOW_TO_HIGH: 'price_asc',
   PRICE_HIGH_TO_LOW: 'price_desc',

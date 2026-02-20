@@ -7,7 +7,7 @@ import { useProducts } from '../../hooks/useProducts';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import ProductModal from '../../components/ProductModal/ProductModal';
 import SkeletonLoader from '../../components/SkeletonLoader/SkeletonLoader';
-import { ROUTES, CATEGORIES } from '../../utils/constants';
+import { ROUTES } from '../../utils/constants';
 import styles from './Home.module.css';
 
 const { Title, Paragraph } = Typography;
@@ -24,15 +24,19 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // Get unique images from products for the carousel
-  const carouselImages = _.uniqBy(
+  const carouselImages = _.filter(_.uniqBy(
     _.map(
-      _.filter(products, p => p.imageUrl && p.imageUrl.trim() !== ''), p => ({
-        url: p.imageUrl,
-        name: p.name,
-        id: p.id
-      })
+      _.filter(
+        products,
+        p => p.featured,
+        p => p.imageUrl && p.imageUrl.trim() !== ''),
+        p => ({
+          url: p.imageUrl,
+          name: p.name,
+          id: p.id
+        }),
     ),'url'
-  );
+  ));
 
   // Auto-advance carousel
   useEffect(() => {
@@ -65,7 +69,7 @@ export default function Home() {
     setSelectedProduct(null);
   };
 
-  const categories = Object.values(CATEGORIES);
+  const categories = _.uniq(_.map(products, product => product.category));
 
   return (
     <div className={styles.home}>
@@ -209,19 +213,18 @@ export default function Home() {
           <Title level={2} className={styles.sectionTitle}>
             Shop by Category
           </Title>
-          <Row gutter={[16, 16]}>
+          <div className={styles.categoryGrid}>
             {categories.map((category) => (
-              <Col xs={24} sm={12} md={8} key={category}>
-                <div 
-                  className={styles.categoryCard}
-                  onClick={() => navigate(`${ROUTES.CATALOGUE}?category=${category.toLowerCase()}`)}
-                >
-                  <Title level={4}>{category}</Title>
-                  <Button type="link">Explore →</Button>
-                </div>
-              </Col>
+              <div 
+                key={category}
+                className={styles.categoryCard}
+                onClick={() => navigate(`${ROUTES.CATALOGUE}?category=${category.toLowerCase()}`)}
+              >
+                <Title level={4}>{category}</Title>
+                <Button type="link">Explore →</Button>
+              </div>
             ))}
-          </Row>
+          </div>
         </div>
       </section>
 

@@ -4,6 +4,7 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border-radius: 8px;
   overflow: hidden;
+  border: 1px solid #e0e0e0;
 }
 
 .productCard:hover {
@@ -39,14 +40,14 @@
 }
 
 .productName {
-  margin: 0 0 8px 0 !important;
+  margin: 0 0 5px 0 !important;
   min-height: 48px;
   font-size: 16px;
   font-weight: 600;
 }
 
 .categoryTag {
-  margin-bottom: 12px;
+  margin-bottom: 5px;
 }
 
 .priceSection {
