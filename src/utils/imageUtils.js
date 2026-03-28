@@ -48,8 +48,8 @@ export function getDirectImageUrl(input, size = 800) {
     return '';
   }
 
-  // Use lh3.googleusercontent.com endpoint for publicly shared files
-  return `https://lh3.googleusercontent.com/d/${fileId}`;
+  const googleUrl = `https://lh3.googleusercontent.com/d/${fileId}`;
+  return `/api/image-proxy?url=${encodeURIComponent(googleUrl)}`;
 }
 
 /**
