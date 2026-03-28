@@ -1,31 +1,18 @@
-//
-// netlify/functions/image-proxy.js
-// Proxy image requests to Google Drive
-//
-
-
-/**
- * Image Proxy
- * Proxy image requests to Google Drive
- * @param {Request} request - The request object
- * @returns {Response} - The response object
- */
-export default async (request) => {
-  const url = new URL(request.url);
-  const imageUrl = url.searchParams.get("url");
+const handler = async (event) => {
+  const imageUrl = event.queryStringParameters?.url;
 
   if (!imageUrl) {
-    return new Response("Missing url parameter", { status: 400 });
+    return { statusCode: 400, body: "Missing url parameter" };
   }
 
   const allowed = ["lh3.googleusercontent.com", "drive.google.com"];
   try {
     const parsed = new URL(imageUrl);
     if (!allowed.some((d) => parsed.hostname.endsWith(d))) {
-      return new Response("Domain not allowed", { status: 403 });
+      return { statusCode: 403, body: "Domain not allowed" };
     }
   } catch {
-    return new Response("Invalid url parameter", { status: 400 });
+    return { statusCode: 400, body: "Invalid url parameter" };
   }
 
   try {
@@ -36,26 +23,26 @@ export default async (request) => {
     });
 
     if (!imageResponse.ok) {
-      return new Response("Failed to fetch image", { status: 502 });
+      return { statusCode: 502, body: "Failed to fetch image" };
     }
 
     const contentType =
       imageResponse.headers.get("content-type") || "image/jpeg";
-    const imageBuffer = await imageResponse.arrayBuffer();
+    const buffer = Buffer.from(await imageResponse.arrayBuffer());
 
-    return new Response(imageBuffer, {
-      status: 200,
+    return {
+      statusCode: 200,
       headers: {
         "Content-Type": contentType,
         "Cache-Control": "public, max-age=86400",
         "Access-Control-Allow-Origin": "*",
       },
-    });
+      body: buffer.toString("base64"),
+      isBase64Encoded: true,
+    };
   } catch {
-    return new Response("Proxy error", { status: 502 });
+    return { statusCode: 502, body: "Proxy error" };
   }
 };
 
-export const config = {
-  path: "/api/image-proxy",
-};
+module.exports = { handler };
