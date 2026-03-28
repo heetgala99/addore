@@ -28,6 +28,20 @@ const handler = async (event) => {
 
     const contentType =
       imageResponse.headers.get("content-type") || "image/jpeg";
+
+    // Google Drive may return an HTML interstitial/challenge page to server-side requests.
+    // In that case, redirect the browser to the source URL instead of returning broken HTML as an image.
+    if (!contentType.toLowerCase().startsWith("image/")) {
+      return {
+        statusCode: 302,
+        headers: {
+          Location: imageUrl,
+          "Cache-Control": "no-cache",
+        },
+        body: "",
+      };
+    }
+
     const buffer = Buffer.from(await imageResponse.arrayBuffer());
 
     return {
